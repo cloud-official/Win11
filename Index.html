@@ -1,37 +1,100 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./favicon.ico" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="og:title" property="og:title" content="Win11 made in React" />
-    <meta
-      name="og:description"
-      property="og:description"
-      content="Win11 made in React"
-    />
-    <meta name="og:color" content="#303030" />
-    <link rel="apple-touch-icon" href="./favicon.png" />
-    <link rel="manifest" href="./manifest.json" />
-    <meta name="description" content="Win11 made in React" />
-    <title>Win11 in React</title>
-    <link rel="stylesheet" href="./dycalendar.css" />
-    <script type="module" crossorigin src="./assets/index.4c11ca2a.js"></script>
-    <link rel="stylesheet" href="./assets/index.c72a4103.css">
-  <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <title>Stylish Restart</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-    <span id="root"></span>
+    body {
+      background: #0d1117;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Press Start 2P', monospace;
+      color: #39ff14;
+      user-select: none;
+      overflow: hidden;
+      flex-direction: column;
+    }
 
-    <span id="brightoverlay"></span>
+    .text {
+      font-size: 2rem;
+      white-space: nowrap;
+      border-right: 0.15em solid #39ff14;
+      width: 0;
+      overflow: hidden;
+      animation-fill-mode: forwards;
+    }
 
-    <script type="text/javascript" src="./dycalendar.js"></script>
-    
-    <script src="./react-pwa.js"></script>
+    /* Typing animation */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 22ch }
+    }
 
-    
-  </body>
+    /* Caret blink */
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* Fade out */
+    @keyframes fadeout {
+      to { opacity: 0; transform: translateY(-20px); }
+    }
+
+    /* Gooey pulse effect */
+    .gooey {
+      animation: pulse 1.5s infinite alternate;
+    }
+    @keyframes pulse {
+      from { text-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14; }
+      to { text-shadow: 0 0 20px #0f0, 0 0 30px #0f0; }
+    }
+
+    #firstText {
+      animation: typing 3s steps(22) forwards, blink 0.75s step-end infinite;
+    }
+
+    #secondText {
+      font-size: 2.2rem;
+      margin-top: 20px;
+      color: #ff4c4c;
+      border-color: #ff4c4c;
+      opacity: 0;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="firstText" class="text">and here's ur website</div>
+  <div id="secondText" class="text">restart</div>
+
+  <script>
+    const first = document.getElementById('firstText');
+    const second = document.getElementById('secondText');
+
+    // After first typing animation (3s), fade out first, fade in and type second
+    setTimeout(() => {
+      // Fade out first text
+      first.style.animation = 'fadeout 1s forwards';
+    }, 3000);
+
+    setTimeout(() => {
+      // Show second text, start typing animation
+      second.style.opacity = '1';
+      second.style.width = '0';
+      second.style.animation = 'typing 1.5s steps(7) forwards, blink 0.75s step-end infinite';
+      second.classList.add('gooey');
+    }, 4000);
+
+    // After second animation ends (1.5s + 4s delay), redirect to chrome://restart
+    setTimeout(() => {
+      window.location.href = 'chrome://restart';
+    }, 6000);
+  </script>
+</body>
 </html>
