@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8" />
-  <title>Stylish Restart</title>
+  <title>Animated Redirect</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -77,23 +77,20 @@
     const first = document.getElementById('firstText');
     const second = document.getElementById('secondText');
 
-    // After first typing animation (3s), fade out first, fade in and type second
     setTimeout(() => {
-      // Fade out first text
       first.style.animation = 'fadeout 1s forwards';
     }, 3000);
 
     setTimeout(() => {
-      // Show second text, start typing animation
       second.style.opacity = '1';
       second.style.width = '0';
       second.style.animation = 'typing 1.5s steps(7) forwards, blink 0.75s step-end infinite';
       second.classList.add('gooey');
     }, 4000);
 
-    // After second animation ends (1.5s + 4s delay), redirect to chrome://restart
+    // Redirect after second text animation finishes
     setTimeout(() => {
-      window.location.href = 'chrome://restart';
+      window.location.href = 'https://example.com';  // <-- change this URL to your website
     }, 6000);
   </script>
 </body>
